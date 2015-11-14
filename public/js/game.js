@@ -1,5 +1,5 @@
-define(["ui", "Human", "Ai", "board", "config", "jquery", "rules", "RandomBrain", "AsyncBrain", "SimpleBrain", "PomDPBrain"],
-function(ui,   Human,   Ai,   board,   config,   $,        rules,   RandomBrain,   AsyncBrain,   SimpleBrain,   PomDPBrain){
+define(["ui", "Human", "board", "config", "jquery", "rules"],
+function(ui,   Human,   board,   config,   $,        rules){
     "use strict";
 
     var rounds = 0;

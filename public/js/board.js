@@ -1,15 +1,11 @@
 define(["Card", "jquery", "layout"],
-function(Card,  $,         layout){
+function(Card,   $,        layout){
     var cards = [];
 
-    for(var i = 0; i < 52; i++){
+    for(var i = 0; i < 81; i++){
         cards.push(new Card(i));
     }
 
-    var carddeck = [];
-    for(i = 0; i < 52; i++) {
-        carddeck.push(i);
-    }
     return {
         cards: cards,
         init: function(){
@@ -22,50 +18,25 @@ function(Card,  $,         layout){
             });
         },
         shuffleDeck: function(){
-            var i;
-            
-            for(i = 0; i < 52; i++){
-                var ran = Math.floor(Math.random() * (52 - i));
-                var tmp = carddeck[ran];
-                carddeck[ran] = carddeck[51-i];
-                carddeck[51 - i] = tmp;
+            for (var i = array.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = cards[i];
+                cards[i] = cards[j];
+                cards[j] = temp;
             }
-
-            for(i = 51; i >= 0; i--){
-                this.cards[carddeck[i]].ind = carddeck[i];
-                this.cards[carddeck[i]].adjustPos();
-            }
-        },
-        distribute: function(players){
-            var curI = 0;
-            var d = $.Deferred();
-            function move(){
-                if(curI === cards.length){
-                    setTimeout(function(){
-                        d.resolve();
-                    }, 200);
-                    return;
-                }
-                players[curI % 4].row.addCard(cards[carddeck[curI]]);
-                players[curI % 4].row.adjustPos();
-                curI++;
-                setTimeout(move, 10);
-            }
-            setTimeout(function(){move();}, 300);
-            return d;
-        },
-        getPosFor: function(ind){
-            return {
-                x: (52 - ind) / 4,
-                y: (52 - ind) / 4,
-                z: -i,
-                rotateY: 180
-            };
         },
         desk: {
             cards: [],
-            players: [],
-            curScore: 0,
+            sets: 0,
+            init: function(){
+              for var(i = 0; i < 3; i++){
+                var row = [];
+                for var(j = 0; j < 4; j++){
+                  row[j].push(card)
+                }
+                cards.push(row);
+              }
+            }
             getPosFor: function(ind){
                 var pos = {
                     x: 0,
