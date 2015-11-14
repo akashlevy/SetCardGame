@@ -8,7 +8,7 @@ function(domBinding){
     var shapes = ['diamond', 'round', 'squiggle'];
 
     var Card = function(id){
-        this.id = id+1;
+        this.id = id + 1;
         this.number = id % 3;
         this.color = (id % 9)/3;
         this.texture = (id % 27)/9;

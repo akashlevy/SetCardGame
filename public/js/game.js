@@ -1,75 +1,10 @@
-define(["ui", "Human", "board", "config", "jquery", "rules"],
-function(ui,   Human,   board,   config,   $,        rules){
+define(["ui", "Human", "board", "jquery", "rules"],
+function(ui,   Human,   board,   $,        rules){
     "use strict";
 
-    var rounds = 0;
-    var players = [
-        new Human(0, config.names[0]),
-        new Ai(1, config.names[1]),
-        new Ai(2, config.names[2]),
-        new Ai(3, config.names[3])
-    ];
-
-    var status = "prepare",
-        currentPlay = 0,
-        played = 0;
-
-    var heartBroken = false;
+    var status = "prepare";
 
     var nextTimer = 0;
-
-    var waitDefer = function(time){
-        var d = $.Deferred();
-        setTimeout(function(){
-            d.resolve();
-        }, time);
-        return d;
-    };
-
-    var initBrains = function(){
-        // players[0].brain = new AsyncBrain(players[0], "PomDPBrain");
-
-        if(players[1].brain){
-            players[1].brain.terminate();
-            players[2].brain.terminate();
-            players[3].brain.terminate();
-        }
-
-        for(var i = 1; i < 4; i++){
-            if(config.levels[i] == 1){
-                players[i].brain = new SimpleBrain(players[i]);
-            } else if(config.levels[i] == 2){
-                players[i].brain = new AsyncBrain(players[i], "McBrain");
-            } else if(config.levels[i] == 3){
-                players[i].brain = new AsyncBrain(players[i], "PomDPBrain");
-            } else if(config.levels[i] == 4){
-                players[i].brain = new AsyncBrain(players[i], "PomDPBrain", {time: 2000});
-            }
-        }
-
-        return $.when(players[1].brain.init(),
-                      players[2].brain.init(),
-                      players[3].brain.init());
-    };
-
-    var informCardOut = function(player, card){
-        if(card.suit === 1){
-            heartBroken = true;
-        }
-        players.forEach(function(p){
-            p.watch({
-                type: "out",
-                player: player,
-                card: card,
-                curSuit: board.desk.cards[0].suit
-            });
-        });
-    };
-
-    var adds = [1, 3, 2];
-    var getPlayerForTransfer = function(id){
-        return (id + adds[rounds % 3]) % 4;
-    };
 
     return {
         adjustLayout: function(){

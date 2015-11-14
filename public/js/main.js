@@ -20,7 +20,7 @@ function(game,    $,        domBinding,   layout){
     });
 
     $('.newgame-but').on("click", function(){
-        // Pause the game
+        // Pause the game here too
         if(confirm("This will end the current game. Are you sure?")){
             game.newGame();
         }

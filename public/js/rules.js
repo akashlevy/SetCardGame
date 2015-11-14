@@ -2,7 +2,7 @@ define(function(){
     "use strict";
 
     return {
-        getValidCards: function(cards, firstSuit, isHeartBroken){
+        isSet: function(cards, firstSuit, isHeartBroken){
             if(firstSuit == -1){
                 if(isHeartBroken){
                     return cards;
