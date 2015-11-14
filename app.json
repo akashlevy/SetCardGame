@@ -1,8 +1,8 @@
 {
-  "name": "Node.js Getting Started",
-  "description": "A barebones Node.js app using Express 4",
-  "repository": "https://github.com/heroku/node-js-getting-started",
-  "logo": "http://node-js-sample.herokuapp.com/node.svg",
-  "keywords": ["node", "express", "static"],
-  "image": "heroku/nodejs"
+  "name": "Set Card Game",
+  "description": "A Set card game webapp",
+  "repository": "https://github.com/akashlevy/SetCardGame",
+  "logo": "public/img/set.svg",
+  "keywords": ["set", "card", "game"],
+  "image": "public/img/set"
 }
