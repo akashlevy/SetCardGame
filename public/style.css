@@ -78,11 +78,12 @@ td[contentEditable]{
 	border-spacing: 20px;
 }
 
-#card-img>{
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%,-50%);
+.card-img{
+	border-radius: 10px;
+}
+
+.card-img:hover{
+	border-radius: 15px;
 }
 
 #main-button-group{
