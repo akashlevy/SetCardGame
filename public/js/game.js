@@ -1,5 +1,5 @@
-define(["ui", "Human", "board", "jquery", "rules"],
-function(ui,   Human,   board,   $,        rules){
+define(["ui", "board", "jquery"],
+function(ui,   board,   $){
     "use strict";
 
     var status = "prepare";
@@ -42,14 +42,10 @@ function(ui,   Human,   board,   $,        rules){
                 status = 'end';
             } else {
                 status = ({
-                    'prepare': 'distribute',
-                    'distribute': 'start',
-                    'start': 'passing',
-                    'passing': 'confirming',
-                    'confirming': 'playing',
+                    'prepare': 'start',
+                    'start': 'playing',
                     'playing': 'playing',
-                    'endRound': 'playing',
-                    'end': 'prepare'
+                    'end': 'prepare',
                 })[status];
             }
             var waitTime = {
@@ -74,33 +70,10 @@ function(ui,   Human,   board,   $,        rules){
                     board.shuffleDeck();
                     initBrains().done(this.next.bind(this));
                 },
-                'distribute': function(){
-                    var self = this;
-                    board.distribute(players).done(function(){
-                        players.forEach(function(p){
-                            p.row.sort();
-                        });
-                        self.next();
-                    });
-                },
                 'start': function(){
                     rounds++;
                     $.when.apply($, players.map(function(p){
                         return p.prepareTransfer(rounds % 3);
-                    })).done(this.next.bind(this));
-                },
-                'passing': function(){
-                    for(var i = 0; i < 4; i++){
-                        players[i].transferTo(players[getPlayerForTransfer(i)]);
-                    }
-                    this.next();
-                },
-                'confirming': function(){
-                    players.forEach(function(r){
-                        r.row.sort();
-                    });
-                    $.when.apply($, players.map(function(p){
-                        return p.confirmTransfer();
                     })).done(this.next.bind(this));
                 },
                 'playing': function(){
@@ -122,12 +95,6 @@ function(ui,   Human,   board,   $,        rules){
                         informCardOut(players[currentPlay], card);
                         this.next();
                     }.bind(this));
-                },
-                'endRound': function(){
-                    var info = board.desk.score();
-                    currentPlay = info[0].id;
-                    info[0].waste.addCards(info[1]);
-                    this.next();
                 },
                 'end': function(){
                     if(players.some(function(p){

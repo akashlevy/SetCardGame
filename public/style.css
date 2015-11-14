@@ -159,41 +159,6 @@ td[contentEditable]{
 	overflow: hidden;
 }
 
-#pass-arrow{
-	display: none;
-	position: absolute;
-	font-size: 200px;
-	color: white;
-	font-family: Arial;
-	left: 50%;
-	top: 50%;
-	margin-top: -100px;
-	margin-left: -100px;
-	text-shadow: 0 0 10px white;
-	opacity: 0;
-	font-weight: bold;
-	cursor: pointer;
-	z-index: 1;
-	-webkit-transition-duration: 0.2s;
-	-moz-transition-duration: 0.2s;
-	-ms-transition-duration: 0.2s;
-	-o-transition-duration: 0.2s;
-	transition-duration: 0.2s;
-}
-
-#pass-arrow.show{
-	display: block;
-	opacity: 1;
-}
-
-#pass-arrow:hover{
-	text-shadow: 0 0 15px black;
-}
-
-#pass-arrow:active{
-	text-shadow: 0 0 1px black;
-}
-
 #play-button{
 	position: absolute;
 	-webkit-appearance: none;

@@ -1,7 +1,7 @@
 define(function(){
     "use strict";
 
-    var arrow = document.createElement('div'),
+    var playing = false,
         button = document.createElement('button'),
         message = document.createElement('div'),
         endMessage = document.createElement("div");
@@ -9,10 +9,8 @@ define(function(){
     button.id = 'play-button';
     message.id = 'game-message';
     arrow.innerHTML = "&larr;";
-    arrow.id = 'pass-arrow';
     endMessage.id = "end-message";
 
-    document.body.appendChild(arrow);
     document.body.appendChild(button);
     document.body.appendChild(message);
     document.body.appendChild(endMessage);
@@ -35,12 +33,6 @@ define(function(){
         hideButton: function(text){
             button.classList.remove('show');
         },
-        arrowClickOnce: function(cb){
-            $(arrow).on("click", function(){
-                cb();
-                $(this).off("click");
-            });
-        },
         buttonClickOnce: function(cb){
             $(button).on("click", function(){
                 cb();
@@ -48,7 +40,7 @@ define(function(){
             });
         },
         showWin: function(won){
-            endMessage.innerHTML = won ? "YOU WON!" : "YOU LOST!";
+            endMessage.innerHTML = "Sets";
             endMessage.classList.add("show");
         },
         hideWin: function(){
@@ -57,17 +49,6 @@ define(function(){
         showMessage: function(msg){
             message.innerHTML = msg;
             message.style.display = 'block';
-        },
-        showPassingScreen: function(dir){
-            var directions = ['left', 'right', 'opposite'];
-            this.showMessage("Pass three cards to the " + directions[dir]);
-            [function(){
-                $(arrow).css("transform", 'rotate(0)');
-            },function(){
-                $(arrow).css("transform", 'rotate(180deg)');
-            },function(){
-                $(arrow).css("transform", 'rotate(90deg)');
-            }][dir]();
         },
         hideMessage: function(){
             message.style.display = '';

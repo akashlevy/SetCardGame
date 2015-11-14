@@ -12,9 +12,9 @@ function(domBinding){
         this.number = id % 3;
         this.color = (id % 9)/3;
         this.texture = (id % 27)/9;
-
-        this.display = domBinding.createCardDisplay(numtext, this.suit);
      };
 
     return Card;
 });
+
+// this.display = domBinding.createCardDisplay(card.id);

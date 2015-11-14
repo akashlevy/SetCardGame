@@ -21,6 +21,7 @@ function(game,    $,        domBinding,   layout){
 
     $('.newgame-but').on("click", function(){
         // Pause the game here too
+        // Unless first time
         if(confirm("This will end the current game. Are you sure?")){
             game.newGame();
         }
