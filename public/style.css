@@ -59,6 +59,32 @@ td[contentEditable]{
 	user-select: text;
 }
 
+#set-count{
+	position: absolute;
+	z-index: 20;
+	top: 50%;
+	left: 50%;
+	margin-top: 190px;
+	transform: translate(-50%, -50%);
+}
+
+#card-table{
+	border: 2px solid black;
+	z-index: 20;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	border-spacing: 20px;
+}
+
+#card-img>{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+}
+
 #main-button-group{
 	position: absolute;
 	left: 0;
@@ -114,6 +140,7 @@ td[contentEditable]{
 	bottom: 0;
 	left: 0;
 	right: 0;
+	z-index: -10;
 	background: lightblue;
 	-webkit-perspective: 8000px;
 	-moz-perspective: 8000px;
