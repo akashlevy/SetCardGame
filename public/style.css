@@ -242,12 +242,6 @@ td[contentEditable]{
 	-ms-perspective: 8000px;
 	-o-perspective: 8000px;
 	perspective: 8000px;
-	background-image:-webkit-radial-gradient(
-		50% 38%, #5330c2, #130083);
-	background-image:-moz-radial-gradient(
-		50% 38%, #5330c2, #130083);
-	background-image:-o-radial-gradient(
-		50% 38%, #5330c2, #130083);
 	background-position:center;
 	background-repeat:no-repeat;
 	background-attachment:fixed;
