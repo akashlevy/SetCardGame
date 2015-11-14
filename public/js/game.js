@@ -14,6 +14,7 @@ function(ui,   board,   $){
             board.desk.adjustPos();
         },
         newGame: function(){
+            // Start the timer
             clearTimeout(nextTimer);
             ui.hideWin();
             players.forEach(function(p, i){

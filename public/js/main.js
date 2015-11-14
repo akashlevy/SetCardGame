@@ -29,4 +29,12 @@ function(game,    $,        domBinding,   layout){
     $('#pause-but').on("click", function(){
         // Pause the game
     });
+
+    $('card-img').on("click", function() {
+        board.selected.push()
+        $(this).css("box-shadow", '0px 0px 15px 0px #0ff');
+        // Display selection
+        // Check whether three selected
+        // Check
+    });
 });

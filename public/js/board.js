@@ -22,14 +22,16 @@ function(Card,   $,        layout){
         },
         desk: {
             cards: [],
+            selected: [],
             sets: 0,
             init: function(){
               for (var i = 0; i < 3; i++){
                 var row = [];
                 for (var j = 0; j < 4; j++){
-                  row[j].push(cards.pop())
+                  row[j].push(cards.pop());
+                  domBinding.updateCardDisplay(card, i, j);
                 }
-                cards.push(row);
+                this.cards.push(row);
               }
             },
             isSet: function(a, b, c) {

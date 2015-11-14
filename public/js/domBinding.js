@@ -94,14 +94,15 @@ define(function(){
                 frag = null;
             }
         },
-        createCardDisplay: function(id){
-            if(!frag){
-                frag = document.createDocumentFragment();
+        updateCardDisplay: function(card, i, j){
+          var $rows = $("#tbl").find("tr");
+          for (var row = 0; row < 3; row++) {
+            var $columns = $($rows[i]).find("td");
+            for (var col = 0; col < 4; col++) {
+              $($columns[col]).append("sdfasdf");
+            $(this).css("box-shadow", '0px 0px 15px 0px #0ff');
             }
-            var display = document.createElement('div');
-            display.className = 'card';
-
-            frag.appendChild(display);
+          }
 
             return new CardDisplay(display);
         }

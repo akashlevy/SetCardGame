@@ -16,5 +16,3 @@ function(domBinding){
 
     return Card;
 });
-
-// this.display = domBinding.createCardDisplay(card.id);

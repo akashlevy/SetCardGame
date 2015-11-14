@@ -460,7 +460,7 @@ td[contentEditable]{
 }
 
 .card>.back{
-	background-image:url('img/flip.png');
+	background-image:url('img/back_set.png');
 	background-repeat:repeat;
 	box-sizing: border-box;
 	moz-box-sizing: border-box;
