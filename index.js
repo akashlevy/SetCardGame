@@ -11,7 +11,6 @@ app.listen(app.get('port'), function() {
   sys.print("running");
 });
 
-app.get('/', routes.dashboard.index);
 app.post('/*', function(request, response) {
   response.redirect('/');
 });
