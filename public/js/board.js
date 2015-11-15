@@ -21,6 +21,16 @@ function(Card,   $,        layout,   domBinding){
               }
               this.grid.push(row);
             }
+            if (!this.hasSet){
+              for (var i = 0; i < grid.length; i++){
+                for (var j = 0; j < grid[i].length; j++){
+                  grid[i][j] = null;
+                  domBinding.updateCardDisplay(card, i, j);
+                }
+              }
+              console.log("Redealing Cards");
+              game.newgame();
+            }
         },
         shuffleDeck: function(){
             for (var i = 80; i >= 0; i--) {
@@ -37,8 +47,7 @@ function(Card,   $,        layout,   domBinding){
             'number' : [a.number, b.number, c.number],
             'color' : [a.color, b.color, c.color],
             'texture' : [a.texture, b.texture, c.texture]
-          };
-
+          }
           // Tests each parameter
           for (prop in values) {
             if (!(values[prop][0] == values[prop][1] && values[prop][2] == values[prop][1]) &&
@@ -49,6 +58,25 @@ function(Card,   $,        layout,   domBinding){
             }
           }
           return true;
-        }
+        },
+        hasSet: function() {
+              var work_list = [] //List of cards in play
+              for (var i = 0; i < this.grid.length; i++){
+                for (var j = 0; j < this.grid[i].length; j++){
+                  work_list.push(this.grid[i][j]);
+                }
+              }
+              for (var a = 0; a < work_list.length-2; a++){
+                for (var b = a+1; b < work_list.length-1; b++){
+                  for (var c = b+1; c < work_list.length; c++){
+                    if (this.isSet(work_list[a],work_list[b],work_list[c])){
+                      return true;
+                    }
+                  }
+                }
+              }
+              return false;
+              
+            }
     };
 });

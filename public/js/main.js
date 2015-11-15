@@ -20,9 +20,7 @@ function(game,    $,        domBinding,   layout,   board){
     $('.newgame-but').on("click", function(){
         // Pause the game here too
         // Unless first time
-        if(confirm("This will end the current game. Are you sure?")){
-            game.newGame();
-        }
+        game.newGame();
     });
     $('#pause-but').on("click", function(){
         // Pause the game
@@ -37,7 +35,6 @@ function(game,    $,        domBinding,   layout,   board){
         }
 
         var selected = [];
-
         var $rows = $("#card-table").find("tr");
         for (var row = 0; row < 3; row++) {
           var $columns = $($rows[row]).find("td .card-img");
@@ -49,12 +46,12 @@ function(game,    $,        domBinding,   layout,   board){
         }
 
         if (selected.length == 3) {
+
           if (board.isSet(board.grid[selected[0][0]][selected[0][1]],
           board.grid[selected[1][0]][selected[1][1]],
           board.grid[selected[2][0]][selected[2][1]])){
             // Display SET! on console
             console.log("SET!");
-
             // Number of sets incremented
             board.sets++;
             $("#set-count").html("Sets: " + board.sets);
@@ -67,14 +64,20 @@ function(game,    $,        domBinding,   layout,   board){
             // Wait 500ms
             setTimeout(function(){
               // Add more cards
-              for (var i = 0; i < 3; i++) {
-                var card = board.cards.pop();
-                board.grid[selected[i][0]][selected[i][1]] = card;
-                domBinding.updateCardDisplay(card, selected[i][0], selected[i][1]);
+              var setexist = false;
+              while (!setexist && board.cards.length>0){
+                console.log("Refilling Board...")
+                for (var i = 0; i < 3; i++) {
+                    var card = board.cards.pop();
+                    board.grid[selected[i][0]][selected[i][1]] = card;
+                    domBinding.updateCardDisplay(card, selected[i][0], selected[i][1]);
+                  }
+                  setexist = board.hasSet();
+              }
+              if (board.cards.length==0 && !board.hasSet()){
+                console.log("Game Over!");
               }
             }, 500);
-
-            // Make sure there is a set
           }
           else {
             console.log("NO SET!");
@@ -92,7 +95,6 @@ function(game,    $,        domBinding,   layout,   board){
             board.sets--;
             $("#set-count").html("Sets: " + board.sets);
           }
-
         }
 
         // Display selection
