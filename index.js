@@ -4,7 +4,6 @@ var express = require('express');
 require('faceplate').middleware({
     app_id: process.env.FACEBOOK_APP_ID,
     secret: process.env.FACEBOOK_SECRET,
-    scope:  'user_likes,user_photos,user_photo_video_tags'
   });
 var app = express();
 

@@ -1,5 +1,5 @@
-define(["ui", "board", "jquery", "Stopwatch"],
-function(ui,   board,   $,        Stopwatch){
+define(["jquery", "Stopwatch"],
+function($,        Stopwatch){
     "use strict";
 
     return {
