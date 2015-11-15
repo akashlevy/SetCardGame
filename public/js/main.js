@@ -65,20 +65,19 @@ function(game,    $,        domBinding,   layout,   board){
             }
 
             // Add more cards
-            while (!board.hasSet() && board.cards.length > 0){
+            var setexist = false;
+            while (!setexist && board.cards.length>0){
+              console.log("Refilling Board...")
               for (var i = 0; i < 3; i++) {
                   var card = board.cards.pop();
                   board.grid[selected[i][0]][selected[i][1]] = card;
-                  domBinding.updateCardDisplayDelay(card, selected[i][0], selected[i][1]);
-                }
+                  domBinding.updateCardDisplay(card, selected[i][0], selected[i][1]);
+                  }
+                setexist = board.hasSet();
             }
-            if (!board.hasSet() && board.cards.length == 0){
+            if (board.cards.length==0 && !board.hasSet()){
               console.log("Game Over!");
-              game.end();
-            }
-            else {
-
-            }
+              }
           }
           else {
             // Cards become unselected
