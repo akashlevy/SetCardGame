@@ -8,6 +8,18 @@ require({
 function(game,    $,        domBinding,   layout,   board){
     "use strict";
 
+    $(document).ready(function() {
+      $.ajaxSetup({ cache: true });
+      $.getScript('//connect.facebook.net/en_US/sdk.js', function(){
+        FB.init({
+          appId: '624872480987210',
+          version: 'v2.4'
+        });
+        $('#loginbutton,#feedbutton').removeAttr('disabled');
+        FB.getLoginStatus(updateStatusCallback);
+      });
+    });
+
     layout.region = $('#game-region')[0];
     layout.adjust();
 
