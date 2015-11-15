@@ -1,10 +1,9 @@
-var FB = require('fb');
 var sys = require('sys');
 var express = require('express');
-// require('faceplate').middleware({
-//     app_id: process.env.FACEBOOK_APP_ID,
-//     secret: process.env.FACEBOOK_SECRET,
-//   });
+require('faceplate').middleware({
+   app_id: process.env.FACEBOOK_APP_ID,
+   secret: process.env.FACEBOOK_SECRET,
+  });
 var app = express();
 
 app.set('port', (process.env.PORT || 5000));
