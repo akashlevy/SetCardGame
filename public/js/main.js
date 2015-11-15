@@ -20,7 +20,7 @@ function(game,    $,        domBinding,   layout,   board){
     $('.newgame-but').on("click", function(){
         // Make cards invisible/visible
         // Pause the game here too
-        // If playing
+        // If playing, check with user
         game.newGame();
     });
 
@@ -54,30 +54,26 @@ function(game,    $,        domBinding,   layout,   board){
           if (board.isSet(board.grid[selected[0][0]][selected[0][1]],
           board.grid[selected[1][0]][selected[1][1]],
           board.grid[selected[2][0]][selected[2][1]])){
-            console.log(board.cards.length);
             // Number of sets incremented
             board.sets++;
             $("#set-count").html("Sets: " + board.sets);
 
-            // Cards disappear for 250ms
+            // Cards disappear
             for (var i = 0; i < 3; i++) {
               selected[i][2].css("visibility", "hidden");
             }
 
             // Add more cards
-            var setexist = false;
-            while (!setexist && board.cards.length>0){
-              console.log("Refilling Board...")
+            do{
               for (var i = 0; i < 3; i++) {
                   var card = board.cards.pop();
                   board.grid[selected[i][0]][selected[i][1]] = card;
                   domBinding.updateCardDisplayDelay(card, selected[i][0], selected[i][1]);
                   }
-                setexist = board.hasSet();
-            }
+            } while (board.cards.length > 0 && !board.hasSet());
             if (board.cards.length==0 && !board.hasSet()){
-              console.log("Game Over!");
-              }
+              game.end();
+            }
           }
           else {
             // Cards become unselected

@@ -42,6 +42,9 @@ function(Card,   $,        layout,   domBinding){
             }
         },
         isSet: function(a, b, c) {
+          if (a === undefined || b === undefined || c === undefined) {
+            return false;
+          }
           // Holds the values of card properties for easy access
           var values = {
             'shape' : [a.shape, b.shape, c.shape],
@@ -61,7 +64,7 @@ function(Card,   $,        layout,   domBinding){
           return true;
         },
         hasSet: function() {
-          var work_list = [] //List of cards in play
+          var work_list = [] // List of cards in play
           for (var i = 0; i < this.grid.length; i++){
             for (var j = 0; j < this.grid[i].length; j++){
               work_list.push(this.grid[i][j]);
