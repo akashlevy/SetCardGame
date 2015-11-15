@@ -65,7 +65,7 @@ function(game,    $,        domBinding,   layout,   board){
             }
 
             // Add more cards
-            while (board.hasSet() && board.cards.length > 0){
+            while (!board.hasSet() && board.cards.length > 0){
               for (var i = 0; i < 3; i++) {
                   var card = board.cards.pop();
                   board.grid[selected[i][0]][selected[i][1]] = card;
