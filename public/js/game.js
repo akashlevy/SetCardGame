@@ -1,54 +1,31 @@
-define(["ui", "board", "jquery"],
-function(ui,   board,   $){
+define(["ui", "board", "jquery", "Stopwatch"],
+function(ui,   board,   $,        Stopwatch){
     "use strict";
 
-    var status = "prepare";
-
-    var nextTimer = 0;
-
     return {
+        paused: false,
+        timer: new Stopwatch($("#timer")),
         newGame: function(){
             // Start the timer
-            clearTimeout(nextTimer);
+            this.timer.reset();
+            this.timer.start();
+
+            // Hide the message window
             ui.hideWin();
-            status = 'prepare';
-            this.proceed();
+            ui.hideMessage();
+            ui.hideButton();
+
+            // Reset the board
+            board.init();
         },
-        next: function(){
-            console.log(status, "next");
-            if (status == 'confirming'){
+        end: function(){
+            // Stop the timer
+            timer.stop();
 
-            } else if (status == 'playing'){
-
-            }
-            status = ({
-                'prepare': 'playing',
-                'playing': 'playing',
-                'end': 'prepare',
-            })[status];
-            var waitTime = {
-                'playing': 100,
-                'endRound': 900,
-                'distribute': 300,
-                'end': 900
-            };
-            var wait = waitTime[status] || 0;
-            nextTimer = setTimeout(this.proceed.bind(this), wait);
-        },
-        proceed: function(){
-            ({
-                'prepare': function(){
-                    ui.hideMessage();
-                    ui.hideButton();
-                    board.init();
-                },
-                'playing': function(){
-
-                },
-                'end': function(){
-
-                }
-            })[status].bind(this)();
+            // Show the message window
+            ui.showWin();
+            ui.showMessage();
+            ui.showButton();
         }
     };
 });

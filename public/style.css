@@ -68,6 +68,15 @@ td[contentEditable]{
 	transform: translate(-50%, -50%);
 }
 
+#timer{
+	position: absolute;
+	z-index: 20;
+	top: 50%;
+	left: 50%;
+	margin-top: -190px;
+	margin-left: -300px;
+}
+
 #card-table{
 	border: 2px solid black;
 	z-index: 20;

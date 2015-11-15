@@ -1,5 +1,4 @@
-define(["domBinding"],
-function(domBinding){
+define(function(){
     "use strict";
 
     var numbers = ['one', 'two', 'three'];

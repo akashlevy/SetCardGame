@@ -18,14 +18,19 @@ function(game,    $,        domBinding,   layout,   board){
     });
 
     $('.newgame-but').on("click", function(){
+        // Make cards invisible/visible
         // Pause the game here too
-        // Unless first time
+        // If playing
         game.newGame();
     });
+
     $('#pause-but').on("click", function(){
-        // Pause the game
+        // Make cards invisible/visible
+        // Pause/unpause the game (switch the labeL)
+        game.timer.s
     });
 
+    // Event handler for clicking a card
     $('.card-img').on("click", function(){
         if ($(this).css("box-shadow") == 'rgb(255, 0, 0) 0px 0px 10px 10px') {
           $(this).css("box-shadow", '0px 0px 0px 0px #000');
@@ -46,12 +51,10 @@ function(game,    $,        domBinding,   layout,   board){
         }
 
         if (selected.length == 3) {
-
           if (board.isSet(board.grid[selected[0][0]][selected[0][1]],
           board.grid[selected[1][0]][selected[1][1]],
           board.grid[selected[2][0]][selected[2][1]])){
-            // Display SET! on console
-            console.log("SET!");
+            console.log(board.cards.length);
             // Number of sets incremented
             board.sets++;
             $("#set-count").html("Sets: " + board.sets);
@@ -61,27 +64,23 @@ function(game,    $,        domBinding,   layout,   board){
               selected[i][2].css("visibility", "hidden");
             }
 
-            // Wait 500ms
-            setTimeout(function(){
-              // Add more cards
-              var setexist = false;
-              while (!setexist && board.cards.length>0){
-                console.log("Refilling Board...")
-                for (var i = 0; i < 3; i++) {
-                    var card = board.cards.pop();
-                    board.grid[selected[i][0]][selected[i][1]] = card;
-                    domBinding.updateCardDisplay(card, selected[i][0], selected[i][1]);
-                  }
-                  setexist = board.hasSet();
-              }
-              if (board.cards.length==0 && !board.hasSet()){
-                console.log("Game Over!");
-              }
-            }, 500);
+            // Add more cards
+            while (board.hasSet() && board.cards.length > 0){
+              for (var i = 0; i < 3; i++) {
+                  var card = board.cards.pop();
+                  board.grid[selected[i][0]][selected[i][1]] = card;
+                  domBinding.updateCardDisplayDelay(card, selected[i][0], selected[i][1]);
+                }
+            }
+            if (!board.hasSet() && board.cards.length == 0){
+              console.log("Game Over!");
+              game.end();
+            }
+            else {
+
+            }
           }
           else {
-            console.log("NO SET!");
-
             // Cards become unselected
             var $rows = $("#card-table").find("tr");
             for (var row = 0; row < 3; row++) {
@@ -96,9 +95,5 @@ function(game,    $,        domBinding,   layout,   board){
             $("#set-count").html("Sets: " + board.sets);
           }
         }
-
-        // Display selection
-        // Check whether three selected
-        // Check
     });
 });

@@ -5,12 +5,18 @@ function(Card,   $,        layout,   domBinding){
         grid: [],
         sets: 0,
         init: function(){
+            // Initialize number of sets to 0
             this.sets = 0;
+            $("#set-count").html("Sets: " + this.sets);
+
+            // Add all 81 cards to the deck and shuffle
             this.cards = [];
             for(var i = 0; i < 81; i++){
                 this.cards.push(new Card(i));
             }
             this.shuffleDeck();
+
+            // Add 12 cards to the grid
             this.grid = [];
             for (var i = 0; i < 3; i++){
               var row = [];
@@ -21,19 +27,14 @@ function(Card,   $,        layout,   domBinding){
               }
               this.grid.push(row);
             }
-            if (!this.hasSet){
-              for (var i = 0; i < grid.length; i++){
-                for (var j = 0; j < grid[i].length; j++){
-                  grid[i][j] = null;
-                  domBinding.updateCardDisplay(card, i, j);
-                }
-              }
-              console.log("Redealing Cards");
-              game.newgame();
+
+            // If no sets, restart
+            if (!this.hasSet()){
+              this.init();
             }
         },
         shuffleDeck: function(){
-            for (var i = 80; i >= 0; i--) {
+            for (var i = 80; i >= 0; i--){
                 var j = Math.round(Math.random() * (i));
                 var temp = this.cards[i];
                 this.cards[i] = this.cards[j];
@@ -60,23 +61,22 @@ function(Card,   $,        layout,   domBinding){
           return true;
         },
         hasSet: function() {
-              var work_list = [] //List of cards in play
-              for (var i = 0; i < this.grid.length; i++){
-                for (var j = 0; j < this.grid[i].length; j++){
-                  work_list.push(this.grid[i][j]);
-                }
-              }
-              for (var a = 0; a < work_list.length-2; a++){
-                for (var b = a+1; b < work_list.length-1; b++){
-                  for (var c = b+1; c < work_list.length; c++){
-                    if (this.isSet(work_list[a],work_list[b],work_list[c])){
-                      return true;
-                    }
-                  }
-                }
-              }
-              return false;
-              
+          var work_list = [] //List of cards in play
+          for (var i = 0; i < this.grid.length; i++){
+            for (var j = 0; j < this.grid[i].length; j++){
+              work_list.push(this.grid[i][j]);
             }
+          }
+          for (var a = 0; a < work_list.length-2; a++){
+            for (var b = a+1; b < work_list.length-1; b++){
+              for (var c = b+1; c < work_list.length; c++){
+                if (this.isSet(work_list[a],work_list[b],work_list[c])){
+                  return true;
+                }
+              }
+            }
+          }
+          return false;
+        }
     };
 });
