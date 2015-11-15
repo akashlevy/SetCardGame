@@ -71,7 +71,7 @@ function(game,    $,        domBinding,   layout,   board){
               for (var i = 0; i < 3; i++) {
                   var card = board.cards.pop();
                   board.grid[selected[i][0]][selected[i][1]] = card;
-                  domBinding.updateCardDisplay(card, selected[i][0], selected[i][1]);
+                  domBinding.updateCardDisplayDelay(card, selected[i][0], selected[i][1]);
                   }
                 setexist = board.hasSet();
             }
