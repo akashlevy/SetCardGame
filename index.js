@@ -1,4 +1,4 @@
-var FB = require('fb');
+//var FB = require('fb');
 var sys = require('sys');
 var express = require('express');
 var app = express();
