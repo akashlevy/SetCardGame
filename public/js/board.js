@@ -1,125 +1,54 @@
 define(["Card", "jquery", "layout", "domBinding"],
 function(Card,   $,        layout,   domBinding){
-    var cards;
-
     return {
-        cards: cards,
+        cards: [],
+        grid: [],
+        sets: 0,
         init: function(){
-            cards = [];
+            this.sets = 0;
+            this.cards = [];
             for(var i = 0; i < 81; i++){
-                cards.push(new Card(i));
+                this.cards.push(new Card(i));
             }
             this.shuffleDeck();
-            this.desk.init();
+            this.grid = [];
+            for (var i = 0; i < 3; i++){
+              var row = [];
+              for (var j = 0; j < 4; j++){
+                var card = this.cards.pop();
+                row.push(card);
+                domBinding.updateCardDisplay(card, i, j);
+              }
+              this.grid.push(row);
+            }
         },
         shuffleDeck: function(){
             for (var i = 80; i >= 0; i--) {
                 var j = Math.round(Math.random() * (i));
-                var temp = cards[i];
-                cards[i] = cards[j];
-                cards[j] = temp;
+                var temp = this.cards[i];
+                this.cards[i] = this.cards[j];
+                this.cards[j] = temp;
             }
         },
-        desk: {
-            grid: [],
-            sets: 0,
-            init: function(){
-              for (var i = 0; i < 3; i++){
-                var row = [];
-                for (var j = 0; j < 4; j++){
-                  var card = cards.pop();
-                  row.push(card);
-                  domBinding.updateCardDisplay(card, i, j);
-                }
-                this.grid.push(row);
-              }
-            },
-            isSet: function(a, b, c) {
-              // Holds parameters of set.
-              // True corresponds to keeping the property the same,
-              // and false corresponds to differing the property
-              var same = {
-                'shape' : true,
-                'number' : true,
-                'color' : true,
-                'texture' : true
-              };
+        isSet: function(a, b, c) {
+          // Holds the values of card properties for easy access
+          var values = {
+            'shape' : [a.shape, b.shape, c.shape],
+            'number' : [a.number, b.number, c.number],
+            'color' : [a.color, b.color, c.color],
+            'texture' : [a.texture, b.texture, c.texture]
+          };
 
-              // Holds the values of card properties for easy access
-              var values = {
-                'shape' : [a.shape, b.shape, c.shape],
-                'number' : [a.number, b.number, c.number],
-                'color' : [a.color, b.color, c.color],
-                'texture' : [a.texture, b.texture, c.texture]
-              };
-
-              // Tests each parameter
-              for (prop in same) {
-                // Is parameter matching same or different?
-                same[prop] = values[prop][0] === values[prop][1];
-                // If the sameness property differs between pairs of cards in set,
-                // Then not a valid set
-                if((values[prop][1] === values[prop][2]) !== same[prop]
-                    || (values[prop][0] === values[prop][2]) !== same[prop]) {
-                  return false;
-                }
-              }
-              return true;
-            },
-            hasSets: function() {
-              var cards = this.cards;
-              function k_combinations(set, k) {
-              	var i, j, combs, head, tailcombs;
-
-              	if (k > set.length || k <= 0) {
-              		return [];
-              	}
-
-              	if (k == set.length) {
-              		return [set];
-              	}
-
-              	if (k == 1) {
-              		combs = [];
-              		for (i = 0; i < set.length; i++) {
-              			combs.push([set[i]]);
-              		}
-              		return combs;
-              	}
-
-              	// Assert {1 < k < set.length}
-
-              	combs = [];
-              	for (i = 0; i < set.length - k + 1; i++) {
-              		head = set.slice(i, i+1);
-              		tailcombs = k_combinations(set.slice(i + 1), k - 1);
-              		for (j = 0; j < tailcombs.length; j++) {
-              			combs.push(head.concat(tailcombs[j]));
-              		}
-              	}
-              	return combs;
-              };
-
-              function sFact(num)
-              {
-                  var rval = 1;
-                  for (var i = 2; i <= num; i++)
-                      rval = rval * i;
-                  return rval;
-              }
-
-              var combs = k_combinations(cards, sFact(cards.length)/sFact(cards.length - 3)/6);
-
-              for (prop of combs) {
-                if(this.isSet(combs[prop].map(function(e) {
-                  return card[e];
-                }))) {
-                  return true;
-                }
-              }
-
-              return false;
+          // Tests each parameter
+          for (prop in values) {
+            if (!(values[prop][0] == values[prop][1] && values[prop][2] == values[prop][1]) &&
+               (!(values[prop][0] != values[prop][1] &&
+                  values[prop][1] != values[prop][2] &&
+                  values[prop][2] != values[prop][0]))) {
+                    return false;
             }
+          }
+          return true;
         }
     };
 });

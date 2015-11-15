@@ -100,6 +100,7 @@ define(function(){
             var $columns = $($rows[i]).find("td img");
             $($columns[j]).attr("src", "img/" + card.id + ".gif");
             $($columns[j]).css("visibility", "visible");
+            $($columns[j]).css("box-shadow", "rgb(0, 0, 0) 0px 0px 0px 0px");
           }
         }
     };
