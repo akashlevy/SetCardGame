@@ -55,9 +55,7 @@ function(Card,   $,        layout,   domBinding){
           // Tests each parameter
           for (prop in values) {
             if (!(values[prop][0] == values[prop][1] && values[prop][2] == values[prop][1]) &&
-               (!(values[prop][0] != values[prop][1] &&
-                  values[prop][1] != values[prop][2] &&
-                  values[prop][2] != values[prop][0]))) {
+               (!(values[prop][0] != values[prop][1] && values[prop][1] != values[prop][2] && values[prop][2] != values[prop][0]))) {
                     return false;
             }
           }

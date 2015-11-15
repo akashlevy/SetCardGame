@@ -25,7 +25,6 @@ define(function(){
               $($columns[j]).css("box-shadow", "rgb(0, 0, 0) 0px 0px 0px 0px");
               if (card !== undefined) {
                 $($columns[j]).attr("src", "img/" + card.id + ".gif");
-
                 // Wait 500ms to make visible
                 setTimeout(function(){$($columns[j]).css("visibility", "visible");}, 500);
               }
