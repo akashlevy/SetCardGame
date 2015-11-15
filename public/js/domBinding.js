@@ -95,16 +95,12 @@ define(function(){
             }
         },
         updateCardDisplay: function(card, i, j){
-          var $rows = $("#tbl").find("tr");
+          var $rows = $("#card-table").find("tr");
           for (var row = 0; row < 3; row++) {
-            var $columns = $($rows[i]).find("td");
-            for (var col = 0; col < 4; col++) {
-              $($columns[col]).append("sdfasdf");
-            $(this).css("box-shadow", '0px 0px 15px 0px #0ff');
-            }
+            var $columns = $($rows[i]).find("td img");
+            $($columns[j]).attr("src", "img/" + card.id + ".gif");
+            $($columns[j]).css("visibility", "visible");
           }
-
-            return new CardDisplay(display);
         }
     };
 });

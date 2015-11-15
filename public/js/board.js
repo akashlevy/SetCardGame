@@ -1,14 +1,14 @@
-define(["Card", "jquery", "layout"],
-function(Card,   $,        layout){
-    var cards = [];
-
-    for(var i = 0; i < 81; i++){
-        cards.push(new Card(i));
-    }
+define(["Card", "jquery", "layout", "domBinding"],
+function(Card,   $,        layout,   domBinding){
+    var cards;
 
     return {
         cards: cards,
         init: function(){
+            cards = [];
+            for(var i = 0; i < 81; i++){
+                cards.push(new Card(i));
+            }
             this.shuffleDeck();
             this.desk.init();
         },
@@ -21,17 +21,17 @@ function(Card,   $,        layout){
             }
         },
         desk: {
-            cards: [],
-            selected: [],
+            grid: [],
             sets: 0,
             init: function(){
               for (var i = 0; i < 3; i++){
                 var row = [];
                 for (var j = 0; j < 4; j++){
-                  row[j].push(cards.pop());
+                  var card = cards.pop();
+                  row.push(card);
                   domBinding.updateCardDisplay(card, i, j);
                 }
-                this.cards.push(row);
+                this.grid.push(row);
               }
             },
             isSet: function(a, b, c) {
@@ -61,8 +61,6 @@ function(Card,   $,        layout){
                 // Then not a valid set
                 if((values[prop][1] === values[prop][2]) !== same[prop]
                     || (values[prop][0] === values[prop][2]) !== same[prop]) {
-                  console.log(values);
-                  console.log(prop);
                   return false;
                 }
               }

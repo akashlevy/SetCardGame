@@ -8,7 +8,6 @@ define(function(){
 
     button.id = 'play-button';
     message.id = 'game-message';
-    arrow.innerHTML = "&larr;";
     endMessage.id = "end-message";
 
     document.body.appendChild(button);
@@ -19,12 +18,6 @@ define(function(){
         clearEvents: function(){
             $(button).off("click");
             $(arrow).off("click");
-        },
-        showArrow: function(){
-            arrow.classList.add('show');
-        },
-        hideArrow: function(){
-            arrow.classList.remove('show');
         },
         showButton: function(text){
             button.innerHTML = text;

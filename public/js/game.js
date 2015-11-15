@@ -7,23 +7,10 @@ function(ui,   board,   $){
     var nextTimer = 0;
 
     return {
-        adjustLayout: function(){
-            players.forEach(function(r){
-                r.adjustPos();
-            });
-            board.desk.adjustPos();
-        },
         newGame: function(){
             // Start the timer
             clearTimeout(nextTimer);
             ui.hideWin();
-            players.forEach(function(p, i){
-                p.clearScore();
-                p.setActive(false);
-                p.setName(config.names[i])
-            });
-            rounds = 0;
-            ui.clearEvents();
             status = 'prepare';
             this.proceed();
         },
@@ -43,8 +30,7 @@ function(ui,   board,   $){
                 status = 'end';
             } else {
                 status = ({
-                    'prepare': 'start',
-                    'start': 'playing',
+                    'prepare': 'playing',
                     'playing': 'playing',
                     'end': 'prepare',
                 })[status];
@@ -63,81 +49,13 @@ function(ui,   board,   $){
                 'prepare': function(){
                     ui.hideMessage();
                     ui.hideButton();
-                    players.forEach(function(p){
-                        p.initForNewRound();
-                    });
                     board.init();
-                    heartBroken = false;
-                    board.shuffleDeck();
-                    initBrains().done(this.next.bind(this));
-                },
-                'start': function(){
-                    rounds++;
-                    $.when.apply($, players.map(function(p){
-                        return p.prepareTransfer(rounds % 3);
-                    })).done(this.next.bind(this));
                 },
                 'playing': function(){
-                    players[currentPlay].setActive(true);
-                    $.when(players[currentPlay].decide(
-                        rules.getValidCards(players[currentPlay].row.cards,
-                                            board.desk.cards[0] ? board.desk.cards[0].suit : -1,
-                                            heartBroken),
-                        board.desk.cards,
-                        board.desk.players,
-                        players.map(function(p){
-                            return p.getScore();
-                        })), waitDefer(200))
-                    .done(function(card){
-                        players[currentPlay].setActive(false);
-                        card.parent.out(card);
-                        board.desk.addCard(card, players[currentPlay]);
-                        card.adjustPos();
-                        informCardOut(players[currentPlay], card);
-                        this.next();
-                    }.bind(this));
+
                 },
                 'end': function(){
-                    if(players.some(function(p){
-                        return p.getScore() === 26;
-                    })){
-                        players.forEach(function(p){
-                            if(p.getScore() !== 26){
-                                p.setScore(26);
-                            }else{
-                                p.setScore(0);
-                            }
-                        });
-                    }
-                    players.forEach(function(p){
-                        p.finalizeScore();
-                    });
-                    var rank = players.map(function(c){
-                        return c;
-                    });
-                    rank.sort(function(a,b){
-                        return a._oldScore - b._oldScore;
-                    });
-                    rank.forEach(function(r,ind){
-                        r.display.rank = ind;
-                    });
-                    players.forEach(function(p){
-                        p.adjustPos();
-                    });
-                    if(players.some(function(p){
-                        return p._oldScore >= 100;
-                    })){
-                        players.forEach(function(p){
-                            p.display.moveUp = true;
-                            p.display.adjustPos();
-                        });
-                        ui.showWin(players[0] === rank[0]);
-                        ui.showButton("Restart");
-                        ui.buttonClickOnce(this.newGame.bind(this));
-                    } else {
-                        ui.showButton("Continue");
-                        ui.buttonClickOnce(this.next.bind(this));
-                    }
+
                 }
             })[status].bind(this)();
         }
