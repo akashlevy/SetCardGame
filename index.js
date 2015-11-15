@@ -1,4 +1,5 @@
 var sys = require('sys');
+var http = require('http');
 var express = require('express');
 var app = express();
 
@@ -10,3 +11,5 @@ app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
   sys.print("running");
 });
+
+server = http.createServer(app);
